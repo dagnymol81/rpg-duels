@@ -1,0 +1,97 @@
+body {
+  background-color: black;
+  color: white;
+  font-family: Roboto Slab;
+}
+
+a:link {
+  color: steelblue;
+  text-decoration: none;
+}
+a:visited{
+  color:gray;
+  text-decoration: none;
+}
+
+main {
+  width: 80vw;
+  height: 90vh;
+  margin: auto;
+  display: grid;
+  grid-template-areas: "header header header"
+                       "p1Img attack p2Img"
+                       "p1Card buttons p2Card"
+                       "log log log"
+                       "footer footer footer";
+  grid-template-rows: 100px 1fr 1fr 1fr 50px;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2vw 2vh;
+  font-size: 4vh;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+#p1-card {
+  grid-area: p1Card;
+  border: 1px solid white;
+  padding: 2vh;
+}
+
+#p2-card {
+  grid-area: p2Card;
+  border: 1px solid white;
+  padding: 2vh;
+}
+
+#current-attack {
+  grid-area: attack;
+}
+
+#p1-image {
+  grid-area: p1Img;
+  background: url('images/hero_wizard_transparent.png') center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#p2-image {
+  grid-area: p2Img;
+  background: url('images/hero_paladin_transparent.png') center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#input-buttons {
+  grid-area: buttons;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#combat-log {
+  grid-area: log;
+  border: 1px solid white;
+}
+
+footer {
+  grid-area: footer;
+  font-size: 20px;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+button {
+  width: 100%;
+  height: 20%;
+  background-color: dimgray;
+  color: white;
+  font-size: 3vh;
+  font-family: Roboto Slab;
+}
+
+button:hover {
+  border: 4px solid white;
+}
+
