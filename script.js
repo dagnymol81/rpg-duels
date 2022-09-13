@@ -9,7 +9,6 @@ const attackBtn = document.querySelector("#attack")
 const specialBtn = document.querySelector("#special")
 const retreatBtn = document.querySelector("#retreat")
 const credits = document.querySelector("#credits")
-
 const modal = document.querySelector("#modal")
 const bg = document.querySelector("#modal-backdrop")
 
@@ -27,7 +26,6 @@ const closeModal = function(event) {
 //remove event listeners when they're not needed!
 bg.removeEventListener("click", closeModal)
 }
-
 credits.addEventListener("click", openModal)
 
 
@@ -35,7 +33,6 @@ credits.addEventListener("click", openModal)
 function randomInt(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
-
 
 class Wizard {
   constructor(name) {
@@ -49,7 +46,6 @@ class Wizard {
 }
 
 class Knight {
-  
   constructor(name) {
     this.hp = randomInt(12, 20)
     this.mp = randomInt(1, 2)
@@ -60,25 +56,65 @@ class Knight {
   }
 }
 
-//set up game 
-let dougHenning = new Wizard("Doug Henning")
-let royGreenhilt = new Knight("Roy Greenhilt")
+function setupGame() {
+  dougHenning = new Wizard("Doug Henning")
+  royGreenhilt = new Knight("Roy Greenhilt")
+  attackText.textContent = "VERSUS"
+  while(combatLog.firstChild) {
+    combatLog.removeChild(combatLog.firstChild)
+  }
+  writeCard(p1Card, dougHenning)
+  writeCard(p2Card, royGreenhilt)
+}
+
 attackBtn.addEventListener("click", () => {
-  playRound(dougHenning, royGreenhilt)
+  playRound(dougHenning, royGreenhilt, "regular")
+})
+
+specialBtn.addEventListener("click", () => {
+  playRound(dougHenning, royGreenhilt, "special")
 })
 
 function writeCard(card, player) {
   card.innerHTML = `<strong>${player.name}</strong><br>HP: ${player.hp}<br>MP: ${player.mp}<br>Damage: d${player.damageDie}`
 }
 
+function specialAttack(player, target) {
+  let damage;
+  const attack = document.createElement("li")
+  player.mp -= 1;
+
+  if (player.mp == 0) {
+    specialBtn.disabled = true;
+  }
+
+  if (randomInt(1, 20) + (2 * player.hit) >= target.ac) {
+    damage = randomInt(1, player.damageDie) + randomInt(1, player.damageDie)
+    target.hp -= damage
+    attackText.innerHTML += `${player.name} SPECIAL HIT! ${damage} damage!<br>`
+    attack.textContent = `${player.name} hits ${target.name} with special for ${damage} damage!`
+    combatLog.prepend(attack)
+    setTimeout(() => {
+      if (target.hp <= 0) {
+        setupGame()
+        alert(player.name + " wins!")
+      }
+    }, 1000)
+
+  } else {
+    attackText.innerHTML = `${player.name} MISS!<br>`
+    attack.textContent += `${player.name} misses ${target.name}!`
+    combatLog.prepend(attack)
+  }
+}
+
+
 function makeAttack(player, target) {
   let damage;
   const attack = document.createElement("li")
 
-  if (randomInt(10, 20) + player.hit >= target.ac) {
-    console.log("hit")
+  if (randomInt(1, 20) + player.hit >= target.ac) {
     damage = randomInt(1, player.damageDie)
-    console.log(damage)
     target.hp -= damage
     attackText.innerHTML += `${player.name} HIT! ${damage} damage!<br>`
     attack.textContent = `${player.name} hits ${target.name} for ${damage} damage!`
@@ -86,12 +122,11 @@ function makeAttack(player, target) {
     setTimeout(() => {
       if (target.hp <= 0) {
         alert(player.name + " wins!")
-        playGame()
+        setupGame()
       }
     }, 1000)
 
   } else {
-    console.log("miss")
     attackText.innerHTML = `${player.name} MISS!<br>`
     attack.textContent += `${player.name} misses ${target.name}!`
     combatLog.prepend(attack)
@@ -100,11 +135,17 @@ function makeAttack(player, target) {
  
 
 
-function playRound(p1, p2) {
+function playRound(p1, p2, attackType) {
 
   attackText.textContent = ""
 
-  makeAttack(p1, p2)
+  if (attackType == "regular") {
+    makeAttack(p1, p2)
+  } else if (attackType == "special") {
+    specialAttack(p1, p2)
+  }
+
+
   writeCard(p1Card, p1)
   writeCard(p2Card, p2)
 
@@ -120,18 +161,5 @@ function playRound(p1, p2) {
 
 
 
-
-function playGame() {
-  dougHenning = new Wizard("Doug Henning")
-  royGreenhilt = new Knight("Roy Greenhilt")
-  attackText.textContent = "VERSUS"
-  while(combatLog.firstChild) {
-    combatLog.removeChild(combatLog.firstChild)
-  }
-  writeCard(p1Card, dougHenning)
-  writeCard(p2Card, royGreenhilt)
-}
-
-playGame()
-
+setupGame()
 
