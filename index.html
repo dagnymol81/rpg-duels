@@ -11,21 +11,30 @@
 </head>
 <body>
 
+<div id="modal">
+  <h1>Credits</h1>
+  <p>
+    Website and code by Dagny Mol. Check it out on <a href="https://github.com/dagnymol81/rpg-duels">Github</a>
+  </p>
+  <p>
+    Character graphics by <a href="https://opengameart.org/users/justin-nichol">Justin Nichol</a>
+  </p><p>
+    <a href="https://fonts.google.com/specimen/Roboto+Slab">Roboto Slab</a> font by Christian Robertson.
+  </p>
+</div>
+<div id="modal-backdrop"></div>
+
   <main>
     <header><h1>RPG Duels</h1></header>
-    <div id="p1-image">
-      <!-- <img src="images/hero_wizard_transparent.png" alt="Wizard"> -->
+    <div id="p1-image" role="img" aria-label="Player 1 Portrait">
     </div>
-    <div id="current-attack"></div>
-    <div id="p2-image">
-      <!-- <img src="images/hero_paladin_transparent.png" alt="Knight"> -->
+    <div id="current-attack">
+      <div id="attack-text">VERSUS</div>
+    </div>
+    <div id="p2-image" role="img" aria-label="Player 2 Portrait">
     </div>
 
     <div id="p1-card">
-      <!-- <strong>Wizard</strong><br>
-      HP: 5/10<br>
-      MP: 3/3<br>
-      Damage: d6 -->
     </div>
     <div id="input-buttons">
       <button name="attack" id="attack">Attack</button>
@@ -33,14 +42,12 @@
       <button name="retreat" id="retreat">Retreat</button>
     </div>
     <div id="p2-card">
-      <!-- <strong>Knight</strong><br>
-    HP: 15/15<br>
-    MP: 2/2<br>
-    Damage: d8 -->
   </div>
-    <div id="combat-log"></div>
+    <div id="combat-log">
+      <ul></ul>
+    </div>
 
-  <footer>Website created by Dagny Mol. <a href="credits.html">Credits</a></footer>
+  <footer><div id="author">Website created by Dagny Mol.</div><div id="credits">Credits</div></footer>
   </main>
 
 
