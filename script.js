@@ -12,7 +12,13 @@ const credits = document.querySelector("#credits")
 const modal = document.querySelector("#modal")
 const bg = document.querySelector("#modal-backdrop")
 
-//todo: preferences object
+const preferences = {
+  p1Class: "wizard",
+  p1Name: "Trevor",
+  p2Class: "fighter",
+  p2Name: "Roy",
+  gameMode: "1p-skirmish"
+}
 
 class Wizard {
   constructor(name) {
@@ -38,6 +44,21 @@ class Knight {
   }
 }
 
+if(preferences.gameMode == "1p-skirmish") {
+  attackBtn.addEventListener("click", () => {
+    playRound(player1, player2, "regular")
+  })
+  
+  specialBtn.addEventListener("click", () => {
+    playRound(player1, player2, "special")
+  })
+}
+
+retreatBtn.addEventListener("click", () => {
+  setupGame()
+})
+
+
 function writeCredits() {
   modal.innerHTML = 
   `<h1>Credits</h1>
@@ -62,7 +83,7 @@ function openModal(event) {
   }
 
   //eventType = "load"
-  addEventListener('load', (event) => {openModal(event)})
+  // addEventListener('load', (event) => {openModal(event)})
  
 const closeModal = function(event) {
   modal.style.display = "none"
@@ -83,23 +104,15 @@ function randomInt(min, max) { // min and max included
 
 function setupGame() {
   specialBtn.disabled = false;
-  dougHenning = new Wizard("Doug Henning")
-  royGreenhilt = new Knight("Roy Greenhilt")
-  attackText.textContent = "VERSUS"
+  player1 = new Wizard(preferences.p1Name)
+  player2 = new Knight(preferences.p2Name)
+  attackText.innerHTML = "<h2>VERSUS</h2>"
   while(combatLog.firstChild) {
     combatLog.removeChild(combatLog.firstChild)
   }
-  writeCard(p1Card, dougHenning)
-  writeCard(p2Card, royGreenhilt)
+  writeCard(p1Card, player1)
+  writeCard(p2Card, player2)
 }
-
-attackBtn.addEventListener("click", () => {
-  playRound(dougHenning, royGreenhilt, "regular")
-})
-
-specialBtn.addEventListener("click", () => {
-  playRound(dougHenning, royGreenhilt, "special")
-})
 
 function writeCard(card, player) {
   card.innerHTML = `<strong>${player.name}</strong><br>HP: ${player.hp}<br>MP: ${player.mp}<br>Damage: d${player.damageDie}`
@@ -111,7 +124,7 @@ function specialAttack(player, target) {
   player.mp -= 1;
 
   //todo: make generic
-  if (dougHenning.mp == 0) {
+  if (player1.mp == 0) {
     specialBtn.disabled = true;
   } 
 
@@ -176,7 +189,7 @@ function playRound(p1, p2, attackType) {
 
   if (p2.hp >= 0) {
 
-    if (p2.mp > 0) {
+    if (p2.mp > 0 && Math.random() > 0.6) {
         setTimeout(() => {
           specialAttack(p2, p1)
         }, 1000)
