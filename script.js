@@ -12,12 +12,58 @@ const credits = document.querySelector("#credits")
 const modal = document.querySelector("#modal")
 const bg = document.querySelector("#modal-backdrop")
 
+//todo: preferences object
+
+class Wizard {
+  constructor(name) {
+    this.hp = randomInt(10, 15)
+    this.mp = randomInt(2, 3)
+    this.ac = randomInt(10, 14)
+    this.hit = randomInt(2, 4)
+    this.damageDie = 6
+    this.name = name
+    this.specialName = "MAGIC BOLT"
+  }
+}
+
+class Knight {
+  constructor(name) {
+    this.hp = randomInt(12, 20)
+    this.mp = randomInt(1, 2)
+    this.ac = randomInt(14, 18)
+    this.hit = randomInt(1, 3)
+    this.damageDie = 8
+    this.name = name
+    this.specialName = "SUPER SMASH"
+  }
+}
+
+function writeCredits() {
+  modal.innerHTML = 
+  `<h1>Credits</h1>
+  <p>
+    Website and code by Dagny Mol. Check it out on <a href="https://github.com/dagnymol81/rpg-duels">Github</a>
+  </p>
+  <p>
+    Character graphics by <a href="https://opengameart.org/users/justin-nichol">Justin Nichol</a>
+  </p><p>
+    <a href="https://fonts.google.com/specimen/Roboto+Slab">Roboto Slab</a> font by Christian Robertson.
+  </p>`
+}
+
 function openModal(event) {
   bg.style.display = "block"
   modal.style.display = "block"
   bg.addEventListener("click", closeModal)
+
+  if (event.target.id == "credits") {
+    writeCredits()
+  }
   }
 
+  //eventType = "load"
+  addEventListener('load', (event) => {openModal(event)})
+ 
 const closeModal = function(event) {
   modal.style.display = "none"
   modal.classList.remove("open")
@@ -34,29 +80,9 @@ function randomInt(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-class Wizard {
-  constructor(name) {
-    this.hp = randomInt(10, 15)
-    this.mp = randomInt(2, 3)
-    this.ac = randomInt(10, 14)
-    this.hit = randomInt(2, 4)
-    this.damageDie = 6
-    this.name = name
-  }
-}
-
-class Knight {
-  constructor(name) {
-    this.hp = randomInt(12, 20)
-    this.mp = randomInt(1, 2)
-    this.ac = randomInt(14, 18)
-    this.hit = randomInt(1, 3)
-    this.damageDie = 8
-    this.name = name
-  }
-}
 
 function setupGame() {
+  specialBtn.disabled = false;
   dougHenning = new Wizard("Doug Henning")
   royGreenhilt = new Knight("Roy Greenhilt")
   attackText.textContent = "VERSUS"
@@ -84,15 +110,16 @@ function specialAttack(player, target) {
   const attack = document.createElement("li")
   player.mp -= 1;
 
-  if (player.mp == 0) {
+  //todo: make generic
+  if (dougHenning.mp == 0) {
     specialBtn.disabled = true;
-  }
+  } 
 
   if (randomInt(1, 20) + (2 * player.hit) >= target.ac) {
-    damage = randomInt(1, player.damageDie) + randomInt(1, player.damageDie)
+    damage = randomInt(1, player.damageDie) + randomInt(1, player.damageDie) + 1
     target.hp -= damage
-    attackText.innerHTML += `${player.name} SPECIAL HIT! ${damage} damage!<br>`
-    attack.textContent = `${player.name} hits ${target.name} with special for ${damage} damage!`
+    attackText.innerHTML += `${player.name} hits with ${player.specialName} for ${damage} damage!<br>`
+    attack.textContent = `${player.name} hits ${target.name} with ${player.specialName} for ${damage} damage!`
     combatLog.prepend(attack)
     setTimeout(() => {
       if (target.hp <= 0) {
@@ -132,8 +159,6 @@ function makeAttack(player, target) {
     combatLog.prepend(attack)
   }
 }
- 
-
 
 function playRound(p1, p2, attackType) {
 
@@ -150,13 +175,21 @@ function playRound(p1, p2, attackType) {
   writeCard(p2Card, p2)
 
   if (p2.hp >= 0) {
-    setTimeout(() => {
-      makeAttack(p2, p1)
-    }, 1000)
+
+    if (p2.mp > 0) {
+        setTimeout(() => {
+          specialAttack(p2, p1)
+        }, 1000)
+    } else {
+      setTimeout(() => {
+        makeAttack(p2, p1)
+      }, 1000)
+    }
+
+
     writeCard(p1Card, p1)
     writeCard(p2Card, p2)
   }
-
 }
 
 

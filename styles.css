@@ -135,3 +135,40 @@ footer {
   width: 100vw;
   height: 100vh;
 }
+
+#modal-content {
+  font-size: 2vh;
+  width:fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+#modal-content h1 {
+  margin-bottom: 1vh;
+}
+
+#p1-name-select, #p2-name-select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#start {
+  font-family: Roboto Slab;
+  font-size: 5vh;
+  background-color: white;
+  border: 3px solid gray;
+}
+
+#start img {
+  width: 5vh;
+  height: 5vh;
+  margin-right: 2vh;
+  margin-left: 2vh;
+}
+
+input {
+  background-color: silver;
+  font-size: 1.5vh;
+}

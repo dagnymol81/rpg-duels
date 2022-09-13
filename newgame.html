@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <title>Document</title>
+</head>
+<body>
+  <section id="modal-content">
+    <h1>Welcome to RPG Duels!</h1>
+   
+    <div id="p1-name-select">
+      <div id="p1-ns-text">Player One Name: </div>
+      <div id="p1-ns-field"><input type="text" name="p1" id="p1"></div>
+    </div>
+
+    <div id="p1-class-select">
+      Player One Class:<br> <input type="radio" id="wizard" name="wizard" value="wizard">
+      <label for="wizard">Wizard</label><br>
+      <input type="radio" id="fighter" name="fighter" value="fighter">
+      <label for="fighter">Fighter</label>
+    </div>
+
+
+    <div id="p2-name-select">
+      <div id="p2-ns-text">Player Two Name:</div><div id="p2-ns-field"><input type="text" name="p2" id="p2"></div>
+    </div>
+
+    <div id="p2-class-select">
+      Player Two Class:<br> <input type="radio" id="wizard" name="wizard" value="wizard">
+      <label for="wizard">Wizard</label><br>
+      <input type="radio" id="fighter" name="fighter" value="fighter">
+      <label for="fighter">Fighter</label>
+    </div>
+
+    <div id="game-mode-select">
+      Game Mode:
+      <br>
+      <input type="radio" id="1p-skirmish" name="1p-skirmish" value="1p-skirmish">
+      <label for="1p-skirmish">Skirmish vs. Computer</label><br>
+  
+      <input type="radio" id="2p-skirmish" name="2p-skirmish" value="2p-skirmish">
+      <label for="2p-skirmish">Skirmish vs. Human (Pass and Play)</label><br>
+  
+      <input type="radio" id="adventure" name="adventure" value="adventure">
+      <label for="adventure">Adventure Mode</label><br>
+    </div>
+    <button id="start">
+      <img src="images/hero_warlord_transparent.png">Start Game<img src="images/boss_cinderdragon_transparent.png"></button>
+  </section>
+</body>
+</html>
