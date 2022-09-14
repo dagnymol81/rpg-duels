@@ -144,7 +144,6 @@ class Ranger {
   }
 }
 
-
 if(preferences.gameMode == "1p-skirmish") {
   attackBtn.addEventListener("click", () => {
     playRound(player1, player2, "regular")
@@ -173,7 +172,95 @@ function writeCredits() {
   </p>`
 }
 
+function writeGameOptions() {
+  modal.innerHTML = `
+  <form  id="modal-content">
+      <h1>Welcome to RPG Duels!</h1>
+      <div id="p1">
+        Player 1 Class:
+    <div id="p1-class-select" class="radio-button">
+      <input type="radio" id="wizard1" name="p1class" value="wizard" class="start-radio" checked>
+      <label for="wizard1">Wizard</label>
+
+      <input type="radio" id="fighter1" name="p1class" value="fighter" class="start-radio">
+      <label for="fighter1">Fighter</label>
+
+      <input type="radio" id="cleric1" name="p1class" value="cleric" class="start-radio">
+      <label for="cleric1">Cleric</label>
+
+      <input type="radio" id="rogue1" name="p1class" value="rogue" class="start-radio">
+      <label for="rogue1">Rogue</label>
+
+      <input type="radio" id="bard1" name="p1class" value="bard" class="start-radio">
+      <label for="bard1">Bard</label>
+
+      <input type="radio" id="ranger1" name="p1class" value="ranger1" class="start-radio">
+      <label for="ranger1">Ranger</label>
+
+    </div>
+
+    <div id="p1-name-select">
+      <div id="p1-ns-text">Player One Name: </div>
+      <div id="p1-ns-field"><input type="text" name="p1Name" id="p1Name" placeholder="Trevor"></div>
+    </div>
+  </div>
+
+    <div id="p2">
+      Player Two Class:<br> 
+      <div id="p2-class-select" class="radio-button">
+      <input type="radio" id="wizard" name="p2class" value="wizard" class="start-radio">
+      <label for="wizard">Wizard</label>
+
+      <input type="radio" id="fighter" name="p2class" value="fighter"  class="start-radio">
+      <label for="fighter">Fighter</label>
+
+      <input type="radio" id="cleric" name="p2class" value="cleric"  class="start-radio">
+      <label for="cleric">Cleric</label>
+
+      <input type="radio" id="rogue" name="p2class" value="rogue"  class="start-radio">
+      <label for="rogue">Rogue</label>
+
+      <input type="radio" id="bard" name="p2class" value="bard"  class="start-radio" checked>
+      <label for="bard">Bard</label>
+
+      <input type="radio" id="ranger" name="p2class" value="ranger"  class="start-radio">
+      <label for="ranger">Ranger</label>
+
+    </div>
+
+    <div id="p2-name-select">
+      <div id="p2-ns-text">Player Two Name:</div><div id="p2-ns-field"><input type="text" name="p2Name" id="p2Name" placeholder="Katie"></div>
+    </div>
+  </div>
+
+        <div id="game-mode-select" class="radio-button">
+      Game Mode:
+      <br>
+      <div id="game-mode-buttons">
+      <input type="radio" id="1p-skirmish" name="game-mode" value="1p-skirmish" class="start-radio" checked>
+      <label for="1p-skirmish">Skirmish vs. Computer</label><br>
+  
+      <input type="radio" id="2p-skirmish" name="game-mode" value="2p-skirmish" class="start-radio">
+      <label for="2p-skirmish">Skirmish vs. Human (Pass and Play)</label><br>
+  
+      <input type="radio" id="adventure" name="game-mode" value="adventure" class="start-radio">
+      <label for="adventure">Adventure Mode</label>
+    </div>
+    </div>
+    <button id="start">
+      <img src="images/hero_warlord_transparent.png">Start Game<img src="images/boss_cinderdragon_transparent.png"></button>
+      </form>
+  `
+  const startBtn = document.querySelector("#start")
+  // startBtn.addEventListener("click", () => {
+  //   preferences.p1Class = 
+
+  //   })
+
+}
+
 function openModal(event) {
+
   bg.style.display = "block"
   modal.style.display = "block"
   bg.addEventListener("click", closeModal)
@@ -181,10 +268,28 @@ function openModal(event) {
   if (event.target.id == "credits") {
     writeCredits()
   }
+  
+  if (eventType = "load") {
+    writeGameOptions()
+    const startBtn = document.querySelector("#start")
+
+    const selectedClassP1 = document.querySelector('input[type=radio][name=p1class]:checked').value
+    const selectedClassP2 = document.querySelector('input[type=radio][name=p2class]:checked').value
+    const selectedGameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
+
+    startBtn.addEventListener(() => {
+      preferences.p1Class = selectedClassP1
+      preferences.p2Class = selectedClassP2
+      preferences.p1Name = document.querySelector("#p1Name").value || "Trevor"
+      preferences.p2Name = document.querySelector("#p2Name").value || "Katie"
+      preferences.gameMode = selectedGameMode
+    })
   }
 
-  //eventType = "load"
-  // addEventListener('load', (event) => {openModal(event)})
+  }
+
+  // eventType = "load"
+  addEventListener('load', (event) => {openModal(event)})
  
 const closeModal = function(event) {
   modal.style.display = "none"
