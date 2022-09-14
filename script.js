@@ -251,12 +251,6 @@ function writeGameOptions() {
       <img src="images/hero_warlord_transparent.png">Start Game<img src="images/boss_cinderdragon_transparent.png"></button>
       </form>
   `
-  const startBtn = document.querySelector("#start")
-  // startBtn.addEventListener("click", () => {
-  //   preferences.p1Class = 
-
-  //   })
-
 }
 
 function openModal(event) {
@@ -270,25 +264,26 @@ function openModal(event) {
   }
   
   if (eventType = "load") {
+
     writeGameOptions()
-    const startBtn = document.querySelector("#start")
+    const modal = document.querySelector("#modal-content")
+    // const selectedClassP1 = document.querySelector('input[type=radio][name=p1class]:checked').value
+    // const selectedClassP2 = document.querySelector('input[type=radio][name=p2class]:checked').value
+    // const selectedGameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
 
-    const selectedClassP1 = document.querySelector('input[type=radio][name=p1class]:checked').value
-    const selectedClassP2 = document.querySelector('input[type=radio][name=p2class]:checked').value
-    const selectedGameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
-
-    startBtn.addEventListener(() => {
-      preferences.p1Class = selectedClassP1
-      preferences.p2Class = selectedClassP2
+    modal.addEventListener("click", () => {
+      preferences.p1Class = document.querySelector('input[type=radio][name=p1class]:checked').value
+      preferences.p2Class = document.querySelector('input[type=radio][name=p2class]:checked').value
       preferences.p1Name = document.querySelector("#p1Name").value || "Trevor"
       preferences.p2Name = document.querySelector("#p2Name").value || "Katie"
-      preferences.gameMode = selectedGameMode
+      preferences.gameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
     })
-  }
 
   }
 
-  // eventType = "load"
+  }
+
+  eventType = "load"
   addEventListener('load', (event) => {openModal(event)})
  
 const closeModal = function(event) {
