@@ -57,16 +57,18 @@ header {
 
 #p1-image {
   grid-area: p1Img;
-  background: url('images/hero_wizard_transparent.png') center center;
+  /* background: url('images/hero_wizard_transparent.png') center center; */
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 #p2-image {
   grid-area: p2Img;
-  background: url('images/hero_paladin_transparent.png') center center;
+  /* background: url('images/hero_paladin_transparent.png') center center; */
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 #input-buttons {
