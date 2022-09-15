@@ -84,6 +84,14 @@ header {
   overflow-y:auto;
 }
 
+#combat-log ul {
+  font-family: 'Courier New', Courier, monospace;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 1vw;
+  line-height: 1.5;
+}
+
 footer {
   grid-area: footer;
   font-size: 20px;
@@ -223,6 +231,10 @@ label {
   background-color: sienna;
   padding: 0 0.5vw;
   margin-top: 1vh;
+}
+
+#replay:hover {
+  border: 4px solid white;
 }
 
 #credits {
