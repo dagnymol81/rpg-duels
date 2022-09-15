@@ -11,7 +11,72 @@
 </head>
 <body>
 
-<div id="modal"></div>
+<div id="modal">
+  <section  id="modal-content">
+    <h1>Welcome to RPG Duels!</h1>
+    <div id="p1">
+      Choose player class:
+  <div id="p1-class-select" class="radio-button">
+    <input type="radio" id="wizard" name="p1class" value="wizard" class="start-radio" checked>
+    <label for="wizard">Wizard</label>
+
+    <input type="radio" id="fighter" name="p1class" value="fighter" class="start-radio">
+    <label for="fighter">Fighter</label>
+
+    <input type="radio" id="cleric" name="p1class" value="cleric" class="start-radio">
+    <label for="cleric">Cleric</label>
+
+    <input type="radio" id="rogue" name="p1class" value="rogue" class="start-radio">
+    <label for="rogue">Rogue</label>
+
+    <input type="radio" id="bard" name="p1class" value="bard" class="start-radio">
+    <label for="bard">Bard</label>
+
+    <input type="radio" id="ranger" name="p1class" value="ranger" class="start-radio">
+    <label for="ranger">Ranger</label>
+
+  </div>
+
+  <div id="p1-name-select">
+    <div id="p1-ns-text">Player Name:</div>
+    <div id="p1-ns-field"><input type="text" name="p1Name" id="p1Name" placeholder="Trevor"></div>
+  </div>
+</div>
+
+  <div id="p2">
+    VERSUS enemy class:<br> 
+    <div id="p2-class-select" class="radio-button">
+    <input type="radio" id="wizard2" name="p2class" value="wizard" class="start-radio">
+    <label for="wizard2">Wizard</label>
+
+    <input type="radio" id="fighter2" name="p2class" value="fighter"  class="start-radio">
+    <label for="fighter2">Fighter</label>
+
+    <input type="radio" id="cleric2" name="p2class" value="cleric"  class="start-radio">
+    <label for="cleric2">Cleric</label>
+
+    <input type="radio" id="rogue2" name="p2class" value="rogue"  class="start-radio">
+    <label for="rogue2">Rogue</label>
+
+    <input type="radio" id="bard2" name="p2class" value="bard"  class="start-radio" checked>
+    <label for="bard2">Bard</label>
+
+    <input type="radio" id="ranger2" name="p2class" value="ranger"  class="start-radio">
+    <label for="ranger2">Ranger</label>
+
+  </div>
+
+  <div id="p2-name-select">
+    <div id="p2-ns-text">Enemy Name:</div><div id="p2-ns-field"><input type="text" name="p2Name" id="p2Name" placeholder="Katie"></div>
+  </div>
+</div>
+
+      
+  <div id="start">
+    <img src="images/hero_warlord_transparent.png">Start Game<img src="images/boss_cinderdragon_transparent.png">
+  </div>
+</section>
+</div>
 <div id="modal-backdrop"></div>
 
   <main>
@@ -37,7 +102,7 @@
       <ul></ul>
     </div>
 
-  <footer><div id="author">Website created by Dagny Mol.</div><div id="credits">Credits</div></footer>
+  <footer><div id="author">Website created by Dagny Mol.</div><div id="credits"><a href="credits.html">Credits</a></div></footer>
   </main>
 
 

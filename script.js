@@ -11,18 +11,53 @@ const retreatBtn = document.querySelector("#retreat")
 const credits = document.querySelector("#credits")
 const modal = document.querySelector("#modal")
 const bg = document.querySelector("#modal-backdrop")
+const p1ClassSelect = document.querySelector("#p1-class-select")
+const p1NameSelect = document.querySelector("#p1-name-select")
+const p2ClassSelect = document.querySelector("#p2-class-select")
+const p2NameSelect = document.querySelector("#p2-name-select")
+const gameModeSelect = document.querySelector("#game-mode-select")
+const startBtn = document.querySelector("#start")
+const modalHeading = document.querySelector("#modal-content h1")
 
-//todo: 1v1 skirmish
-//todo: adventure mode
-//todo: modal
-
-const preferences = {
-  p1Class: "rogue",
+let preferences = {
+  p1Class: "wizard",
   p1Name: "Trevor",
-  p2Class: "cleric",
-  p2Name: "Roy",
+  p2Class: "bard",
+  p2Name: "Katie",
   gameMode: "1p-skirmish"
 }
+
+p1ClassSelect.addEventListener("click", (event) => {
+  preferences.p1Class = event.target.value
+ })
+
+ p1NameSelect.addEventListener("input", (event) => {
+  preferences.p1Name = event.target.value
+ })
+
+ p2ClassSelect.addEventListener("click", (event) => {
+  preferences.p2Class = event.target.value
+ })
+
+ p2NameSelect.addEventListener("input", (event) => {
+  preferences.p2Name = event.target.value
+ })
+
+ startBtn.addEventListener("click", () => {
+  setupGame()
+  closeModal()
+ })
+
+ addEventListener('load', openModal)
+
+attackBtn.addEventListener("click", () => {
+  playRound(player1, player2, "regular")
+})
+  
+specialBtn.addEventListener("click", () => {
+  playRound(player1, player2, "special")
+})
+
 
 class Wizard {
   constructor(name) {
@@ -144,149 +179,17 @@ class Ranger {
   }
 }
 
-if(preferences.gameMode == "1p-skirmish") {
-  attackBtn.addEventListener("click", () => {
-    playRound(player1, player2, "regular")
-  })
-  
-  specialBtn.addEventListener("click", () => {
-    playRound(player1, player2, "special")
-  })
-}
-
 retreatBtn.addEventListener("click", () => {
-  setupGame()
+  endGame("retreat")
 })
 
 
-function writeCredits() {
-  modal.innerHTML = 
-  `<h1>Credits</h1>
-  <p>
-    Website and code by Dagny Mol. Check it out on <a href="https://github.com/dagnymol81/rpg-duels">Github</a>
-  </p>
-  <p>
-    Character graphics by <a href="https://opengameart.org/users/justin-nichol">Justin Nichol</a>
-  </p><p>
-    <a href="https://fonts.google.com/specimen/Roboto+Slab">Roboto Slab</a> font by Christian Robertson.
-  </p>`
-}
-
-function writeGameOptions() {
-  modal.innerHTML = `
-  <form  id="modal-content">
-      <h1>Welcome to RPG Duels!</h1>
-      <div id="p1">
-        Player 1 Class:
-    <div id="p1-class-select" class="radio-button">
-      <input type="radio" id="wizard1" name="p1class" value="wizard" class="start-radio" checked>
-      <label for="wizard1">Wizard</label>
-
-      <input type="radio" id="fighter1" name="p1class" value="fighter" class="start-radio">
-      <label for="fighter1">Fighter</label>
-
-      <input type="radio" id="cleric1" name="p1class" value="cleric" class="start-radio">
-      <label for="cleric1">Cleric</label>
-
-      <input type="radio" id="rogue1" name="p1class" value="rogue" class="start-radio">
-      <label for="rogue1">Rogue</label>
-
-      <input type="radio" id="bard1" name="p1class" value="bard" class="start-radio">
-      <label for="bard1">Bard</label>
-
-      <input type="radio" id="ranger1" name="p1class" value="ranger1" class="start-radio">
-      <label for="ranger1">Ranger</label>
-
-    </div>
-
-    <div id="p1-name-select">
-      <div id="p1-ns-text">Player One Name: </div>
-      <div id="p1-ns-field"><input type="text" name="p1Name" id="p1Name" placeholder="Trevor"></div>
-    </div>
-  </div>
-
-    <div id="p2">
-      Player Two Class:<br> 
-      <div id="p2-class-select" class="radio-button">
-      <input type="radio" id="wizard" name="p2class" value="wizard" class="start-radio">
-      <label for="wizard">Wizard</label>
-
-      <input type="radio" id="fighter" name="p2class" value="fighter"  class="start-radio">
-      <label for="fighter">Fighter</label>
-
-      <input type="radio" id="cleric" name="p2class" value="cleric"  class="start-radio">
-      <label for="cleric">Cleric</label>
-
-      <input type="radio" id="rogue" name="p2class" value="rogue"  class="start-radio">
-      <label for="rogue">Rogue</label>
-
-      <input type="radio" id="bard" name="p2class" value="bard"  class="start-radio" checked>
-      <label for="bard">Bard</label>
-
-      <input type="radio" id="ranger" name="p2class" value="ranger"  class="start-radio">
-      <label for="ranger">Ranger</label>
-
-    </div>
-
-    <div id="p2-name-select">
-      <div id="p2-ns-text">Player Two Name:</div><div id="p2-ns-field"><input type="text" name="p2Name" id="p2Name" placeholder="Katie"></div>
-    </div>
-  </div>
-
-        <div id="game-mode-select" class="radio-button">
-      Game Mode:
-      <br>
-      <div id="game-mode-buttons">
-      <input type="radio" id="1p-skirmish" name="game-mode" value="1p-skirmish" class="start-radio" checked>
-      <label for="1p-skirmish">Skirmish vs. Computer</label><br>
-  
-      <input type="radio" id="2p-skirmish" name="game-mode" value="2p-skirmish" class="start-radio">
-      <label for="2p-skirmish">Skirmish vs. Human (Pass and Play)</label><br>
-  
-      <input type="radio" id="adventure" name="game-mode" value="adventure" class="start-radio">
-      <label for="adventure">Adventure Mode</label>
-    </div>
-    </div>
-    <button id="start">
-      <img src="images/hero_warlord_transparent.png">Start Game<img src="images/boss_cinderdragon_transparent.png"></button>
-      </form>
-  `
-}
-
-function openModal(event) {
-
+function openModal() {
   bg.style.display = "block"
   modal.style.display = "block"
-  bg.addEventListener("click", closeModal)
-
-  if (event.target.id == "credits") {
-    writeCredits()
   }
-  
-  if (eventType = "load") {
-
-    writeGameOptions()
-    const modal = document.querySelector("#modal-content")
-    // const selectedClassP1 = document.querySelector('input[type=radio][name=p1class]:checked').value
-    // const selectedClassP2 = document.querySelector('input[type=radio][name=p2class]:checked').value
-    // const selectedGameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
-
-    modal.addEventListener("click", () => {
-      preferences.p1Class = document.querySelector('input[type=radio][name=p1class]:checked').value
-      preferences.p2Class = document.querySelector('input[type=radio][name=p2class]:checked').value
-      preferences.p1Name = document.querySelector("#p1Name").value || "Trevor"
-      preferences.p2Name = document.querySelector("#p2Name").value || "Katie"
-      preferences.gameMode = document.querySelector('input[type=radio][name=game-mode]:checked').value
-    })
-
-  }
-
-  }
-
-  eventType = "load"
-  addEventListener('load', (event) => {openModal(event)})
  
-const closeModal = function(event) {
+function closeModal() {
   modal.style.display = "none"
   modal.classList.remove("open")
   bg.style.display = "none"
@@ -294,8 +197,6 @@ const closeModal = function(event) {
 //remove event listeners when they're not needed!
 bg.removeEventListener("click", closeModal)
 }
-credits.addEventListener("click", openModal)
-
 
 //helper function for better random!
 function randomInt(min, max) { // min and max included 
@@ -370,6 +271,22 @@ function writeCard(card, player) {
   card.innerHTML = `<strong>${player.name}</strong><br>AC: ${player.ac}<br>HP: ${player.hp}<br>MP: ${player.mp}`
 }
 
+function endGame(winner) {
+
+  if (winner == "retreat") {
+    attackText.innerHTML = `Retreat! <div id="replay">Play again?</div>`
+  } else {
+    attackText.innerHTML = `${winner} wins. <div id="replay">Play again?</div>`
+  }
+
+  const playAgain = document.querySelector("#replay")
+  bg.style.opacity = "0.9"
+  bg.addEventListener("click", closeModal)
+  modalHeading.textContent = "Ready for more duels?"
+  playAgain.addEventListener("click", openModal)
+
+}
+
 function makeAttack(player, target, special) {
 
   let damage;
@@ -405,8 +322,7 @@ function makeAttack(player, target, special) {
 
     setTimeout(() => {
       if (target.hp <= 0) {
-        alert(player.name + " wins!")
-        setupGame()
+        endGame(player.name)
       }
     }, 1000)
 
@@ -431,8 +347,7 @@ function playRound(p1, p2, attackType) {
   writeCard(p1Card, p1)
   writeCard(p2Card, p2)
 
-  if (p2.hp >= 0) {
-
+  if (p2.hp > 0) {
     if (p2.mp > 0 && Math.random() > 0.6) {
         setTimeout(() => {
           makeAttack(p2, p1, true)
@@ -448,6 +363,4 @@ function playRound(p1, p2, attackType) {
     writeCard(p2Card, p2)
   }
 }
-
-setupGame()
 
