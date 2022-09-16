@@ -19,6 +19,8 @@ const gameModeSelect = document.querySelector("#game-mode-select")
 const startBtn = document.querySelector("#start")
 const modalHeading = document.querySelector("#modal-content h1")
 
+//todo: disable all buttons at game end
+
 let preferences = {
   p1Class: "wizard",
   p1Name: "Trevor",
@@ -206,6 +208,8 @@ function randomInt(min, max) { // min and max included
 
 function setupGame() {
   specialBtn.disabled = false;
+  attackBtn.disabled = false;
+  retreatBtn.disabled = false;
 
   switch(preferences.p1Class) {
     case "wizard":
@@ -273,6 +277,10 @@ function writeCard(card, player) {
 
 function endGame(winner) {
 
+  specialBtn.disabled = true;
+  attackBtn.disabled = true;
+  retreatBtn.disabled = true;
+
   if (winner == "retreat") {
     attackText.innerHTML = `Retreat! <div id="replay">Play again?</div>`
   } else {
@@ -337,18 +345,21 @@ function playRound(p1, p2, attackType) {
 
   attackText.textContent = ""
 
-  if (attackType == "regular") {
-    makeAttack(p1, p2, false)
-  } else if (attackType == "special") {
-    makeAttack(p1, p2, true)
+  if (p1.hp > 0) {
+    if (attackType == "regular") {
+      makeAttack(p1, p2, false)
+    } else if (attackType == "special") {
+      makeAttack(p1, p2, true)
+    }
   }
+
 
 
   writeCard(p1Card, p1)
   writeCard(p2Card, p2)
 
   if (p2.hp > 0) {
-    if (p2.mp > 0 && Math.random() > 0.6) {
+    if (p2.mp > 0 && Math.random() > 0.5) {
         setTimeout(() => {
           makeAttack(p2, p1, true)
         }, 1000)

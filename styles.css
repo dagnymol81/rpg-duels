@@ -51,8 +51,9 @@ header {
 #current-attack {
   grid-area: attack;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: 3vh;
 }
 
@@ -239,7 +240,7 @@ label {
 
 #credits {
   margin: auto;
-  width: 70%;
+  width: 80%;
   height: 90vh;
   font-size: 2vh;
   display: flex;
