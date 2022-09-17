@@ -353,8 +353,6 @@ function playRound(p1, p2, attackType) {
     }
   }
 
-
-
   writeCard(p1Card, p1)
   writeCard(p2Card, p2)
 
