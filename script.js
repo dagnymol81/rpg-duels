@@ -19,8 +19,6 @@ const gameModeSelect = document.querySelector("#game-mode-select")
 const startBtn = document.querySelector("#start")
 const modalHeading = document.querySelector("#modal-content h1")
 
-//todo: disable all buttons at game end
-
 let preferences = {
   p1Class: "wizard",
   p1Name: "Trevor",
@@ -29,6 +27,7 @@ let preferences = {
   gameMode: "1p-skirmish"
 }
 
+//event listeners
 p1ClassSelect.addEventListener("click", (event) => {
   preferences.p1Class = event.target.value
  })
@@ -185,7 +184,7 @@ retreatBtn.addEventListener("click", () => {
   endGame("retreat")
 })
 
-
+//display modal for new game settings
 function openModal() {
   bg.style.display = "block"
   modal.style.display = "block"
@@ -205,7 +204,7 @@ function randomInt(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-
+//create characters and draw page
 function setupGame() {
   specialBtn.disabled = false;
   attackBtn.disabled = false;
@@ -271,10 +270,12 @@ function setupGame() {
   writeCard(p2Card, player2)
 }
 
+//write character stats on screen
 function writeCard(card, player) {
   card.innerHTML = `<strong>${player.name}</strong><br>AC: ${player.ac}<br>HP: ${player.hp}<br>MP: ${player.mp}`
 }
 
+//disable attack buttons and allow player to play again
 function endGame(winner) {
 
   specialBtn.disabled = true;
@@ -295,6 +296,7 @@ function endGame(winner) {
 
 }
 
+//single attack (regular or special)
 function makeAttack(player, target, special) {
 
   let damage;
@@ -341,6 +343,7 @@ function makeAttack(player, target, special) {
   }
 }
 
+//player attack and counterattack
 function playRound(p1, p2, attackType) {
 
   attackText.textContent = ""
