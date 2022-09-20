@@ -34,3 +34,7 @@ Features under consideration but not yet implemented:
 
   - Roboto Slab font by Christian Robertson from Google Fonts:
   https://fonts.google.com/specimen/Roboto+Slab
+  
+  ## LICENSE
+  
+  MIT License
