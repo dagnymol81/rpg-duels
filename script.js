@@ -19,7 +19,7 @@ const gameModeSelect = document.querySelector("#game-mode-select")
 const startBtn = document.querySelector("#start")
 const modalHeading = document.querySelector("#modal-content h1")
 
-//todo: disable all buttons at game end
+let roundTwo = false;
 
 let preferences = {
   p1Class: "wizard",
@@ -29,6 +29,7 @@ let preferences = {
   gameMode: "1p-skirmish"
 }
 
+//event listeners
 p1ClassSelect.addEventListener("click", (event) => {
   preferences.p1Class = event.target.value
  })
@@ -53,11 +54,11 @@ p1ClassSelect.addEventListener("click", (event) => {
  addEventListener('load', openModal)
 
 attackBtn.addEventListener("click", () => {
-  playRound(player1, player2, "regular")
+  setTimeout(playRound(player1, player2, "regular"), 1000)
 })
   
 specialBtn.addEventListener("click", () => {
-  playRound(player1, player2, "special")
+  setTimeout(playRound(player1, player2, "special"), 1000)
 })
 
 
@@ -185,7 +186,7 @@ retreatBtn.addEventListener("click", () => {
   endGame("retreat")
 })
 
-
+//display modal for new game settings
 function openModal() {
   bg.style.display = "block"
   modal.style.display = "block"
@@ -205,7 +206,7 @@ function randomInt(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-
+//create characters and draw page
 function setupGame() {
   specialBtn.disabled = false;
   attackBtn.disabled = false;
@@ -271,10 +272,12 @@ function setupGame() {
   writeCard(p2Card, player2)
 }
 
+//write character stats on screen
 function writeCard(card, player) {
   card.innerHTML = `<strong>${player.name}</strong><br>AC: ${player.ac}<br>HP: ${player.hp}<br>MP: ${player.mp}`
 }
 
+//disable attack buttons and allow player to play again
 function endGame(winner) {
 
   specialBtn.disabled = true;
@@ -295,6 +298,7 @@ function endGame(winner) {
 
 }
 
+//single attack (regular or special)
 function makeAttack(player, target, special) {
 
   let damage;
@@ -316,15 +320,15 @@ function makeAttack(player, target, special) {
   }
 
     //todo: make generic
-  if (player1.mp == 0) {
-    specialBtn.disabled = true;
-  } 
+  // if (player1.mp == 0) {
+  //   specialBtn.disabled = true;
+  // } 
 
   if (attackRoll + hit >= target.ac) {
 
     target.hp -= damage
 
-    attackText.innerHTML += `${player.name} HIT with ${attackName}! ${damage} damage!<br>`
+    attackText.innerHTML = `${player.name} HIT with ${attackName}! ${damage} damage!<br>`
     attack.textContent = `${player.name} hits ${target.name} with ${attackName} for ${damage} damage!`
     combatLog.prepend(attack)
 
@@ -339,39 +343,82 @@ function makeAttack(player, target, special) {
     attack.textContent += `${player.name} misses ${target.name}!`
     combatLog.prepend(attack)
   }
+
+  //todo 1p mode
+  if (target.hp > 0) {
+    setTimeout(() => {
+      attackText.innerHTML = `${target.name}'s turn!`
+    }, 1000)
+  }
+
+
 }
+
+//player attack and counterattack
+// function playRound(p1, p2, attackType) {
+
+//   attackText.textContent = ""
+
+//   if (p1.hp > 0) {
+//     if (attackType == "regular") {
+//       makeAttack(p1, p2, false)
+//     } else if (attackType == "special") {
+//       makeAttack(p1, p2, true)
+//     }
+//   }
+
+//   writeCard(p1Card, p1)
+//   writeCard(p2Card, p2)
+
+//   if (p2.hp > 0) {
+//     if (p2.mp > 0 && Math.random() > 0.5) {
+//         setTimeout(() => {
+//           makeAttack(p2, p1, true)
+//         }, 1000)
+//     } else {
+//       setTimeout(() => {
+//         makeAttack(p2, p1)
+//       }, 1000)
+//     }
+
+
+//     writeCard(p1Card, p1)
+//     writeCard(p2Card, p2)
+//   }
+// }
+
+
+//todo: disable specials at 0mp
+//todo: select mode
+
 
 function playRound(p1, p2, attackType) {
 
   attackText.textContent = ""
 
-  if (p1.hp > 0) {
-    if (attackType == "regular") {
-      makeAttack(p1, p2, false)
-    } else if (attackType == "special") {
-      makeAttack(p1, p2, true)
-    }
-  }
-
-
-
-  writeCard(p1Card, p1)
-  writeCard(p2Card, p2)
-
-  if (p2.hp > 0) {
-    if (p2.mp > 0 && Math.random() > 0.5) {
-        setTimeout(() => {
+  if (roundTwo) {
+      if (p2.hp > 0) {
+        if (attackType == "regular") {
+          makeAttack(p2, p1, false)
+        } else if (attackType == "special") {
           makeAttack(p2, p1, true)
-        }, 1000)
-    } else {
-      setTimeout(() => {
-        makeAttack(p2, p1)
-      }, 1000)
+        }
+      }
+    roundTwo = false;
+  } else {
+      if (p1.hp > 0) {
+        if (attackType == "regular") {
+          makeAttack(p1, p2, false)
+        } else if (attackType == "special") {
+          makeAttack(p1, p2, true)
+        }
+      }
+    roundTwo = true;
     }
-
 
     writeCard(p1Card, p1)
     writeCard(p2Card, p2)
-  }
 }
+
+
 
