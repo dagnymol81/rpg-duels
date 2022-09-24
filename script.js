@@ -46,6 +46,10 @@ p1ClassSelect.addEventListener("click", (event) => {
   preferences.p2Name = event.target.value
  })
 
+ gameModeSelect.addEventListener("click", (event) => {
+  preferences.gameMode = event.target.value
+ })
+
  startBtn.addEventListener("click", () => {
   setupGame()
   closeModal()
@@ -60,7 +64,6 @@ attackBtn.addEventListener("click", () => {
 specialBtn.addEventListener("click", () => {
   setTimeout(playRound(player1, player2, "special"), 1000)
 })
-
 
 class Wizard {
   constructor(name) {
@@ -212,6 +215,8 @@ function setupGame() {
   attackBtn.disabled = false;
   retreatBtn.disabled = false;
 
+  roundTwo = false;
+
   switch(preferences.p1Class) {
     case "wizard":
       player1 = new Wizard(preferences.p1Name)
@@ -319,11 +324,6 @@ function makeAttack(player, target, special) {
     attackName = player.attackName
   }
 
-    //todo: make generic
-  // if (player1.mp == 0) {
-  //   specialBtn.disabled = true;
-  // } 
-
   if (attackRoll + hit >= target.ac) {
 
     target.hp -= damage
@@ -354,54 +354,66 @@ function makeAttack(player, target, special) {
 
 }
 
-//player attack and counterattack
-// function playRound(p1, p2, attackType) {
-
-//   attackText.textContent = ""
-
-//   if (p1.hp > 0) {
-//     if (attackType == "regular") {
-//       makeAttack(p1, p2, false)
-//     } else if (attackType == "special") {
-//       makeAttack(p1, p2, true)
-//     }
-//   }
-
-//   writeCard(p1Card, p1)
-//   writeCard(p2Card, p2)
-
-//   if (p2.hp > 0) {
-//     if (p2.mp > 0 && Math.random() > 0.5) {
-//         setTimeout(() => {
-//           makeAttack(p2, p1, true)
-//         }, 1000)
-//     } else {
-//       setTimeout(() => {
-//         makeAttack(p2, p1)
-//       }, 1000)
-//     }
-
-
-//     writeCard(p1Card, p1)
-//     writeCard(p2Card, p2)
-//   }
-// }
-
-
-//todo: disable specials at 0mp
-//todo: select mode
-
-
 function playRound(p1, p2, attackType) {
-
   attackText.textContent = ""
 
+  if(preferences.gameMode == "1p-skirmish") {
+    playRoundSinglePlayer(p1, p2, attackType)
+  } else if (preferences.gameMode == "2p-skirmish") {
+    twoPlayerAttack(p1, p2, attackType)
+  }
+
+  writeCard(p1Card, p1)
+  writeCard(p2Card, p2)
+}
+
+//player attack and counterattack
+function playRoundSinglePlayer(p1, p2, attackType) {
+
+  if (p1.hp > 0) {
+    if (attackType == "regular") {
+      makeAttack(p1, p2, false)
+    } else if (attackType == "special" && p1.mp > 0) {
+      makeAttack(p1, p2, true)
+    } else {
+      attackText.innerHTML = "No more mana! Using regular attack"
+      combatLog.prepend("No more mana! Using regular attack")
+      setTimeout(() => {
+        makeAttack(p1, p2, false)
+      }, 500)
+    }
+  }
+
+  writeCard(p1Card, p1)
+  writeCard(p2Card, p2)
+
+  if (p2.hp > 0) {
+    if (p2.mp > 0 && Math.random() > 0.5) {
+        setTimeout(() => {
+          makeAttack(p2, p1, true)
+        }, 1000)
+    } else {
+      setTimeout(() => {
+        makeAttack(p2, p1)
+      }, 1000)
+    }
+  }
+}
+
+
+function twoPlayerAttack(p1, p2, attackType) {
   if (roundTwo) {
       if (p2.hp > 0) {
         if (attackType == "regular") {
           makeAttack(p2, p1, false)
-        } else if (attackType == "special") {
+        } else if (attackType == "special" && p2.mp > 0) {
           makeAttack(p2, p1, true)
+        } else {
+          attackText.innerHTML = "No more mana! Using regular attack"
+          combatLog.prepend("No more mana! Using regular attack")
+          setTimeout(() => {
+            makeAttack(p2, p1, false)
+          }, 500)
         }
       }
     roundTwo = false;
@@ -409,15 +421,18 @@ function playRound(p1, p2, attackType) {
       if (p1.hp > 0) {
         if (attackType == "regular") {
           makeAttack(p1, p2, false)
-        } else if (attackType == "special") {
+        } else if (attackType == "special" && p1.mp > 0) {
           makeAttack(p1, p2, true)
+        } else {
+          attackText.innerHTML = "No more mana! Using regular attack"
+          combatLog.prepend("No more mana! Using regular attack")
+          setTimeout(() => {
+            makeAttack(p1, p2, false)
+          }, 500)
         }
       }
     roundTwo = true;
     }
-
-    writeCard(p1Card, p1)
-    writeCard(p2Card, p2)
 }
 
 
