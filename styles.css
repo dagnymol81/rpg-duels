@@ -266,3 +266,57 @@ label {
   display: flex;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 450px) {
+  #combat-log {
+    display: none;
+  }
+  main {
+    font-size: 3vh;
+    width: 95vw;
+    height: 90vh;
+    display: grid;
+    grid-template-areas: "header header header"
+                         "p1Img . p2Img"
+                         "attack attack attack"
+                         "buttons buttons buttons"
+                         "p1Card . p2Card"
+                         "footer footer footer";
+    grid-template-rows: 7vh 1fr 1fr 4vh 1fr 3vh;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1vw 1vh;
+  }
+  #p1-card, #p2-card {
+    border: none;
+    padding: none;
+  }
+  .if {
+    font-size: 2vh;
+    height: fit-content;
+    width: fit-content;
+  }
+  h1 {
+    font-size: 5vh;
+  }
+  #input-buttons {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  footer {
+    font-size: 2vh;
+    padding: none;
+    border: none;
+  }
+  #start {
+    font-size: 4vh;
+  }
+
+  #current-attack {
+    grid-area: attack;
+    display:block;
+    font-size: 3vh;
+  }
+
+}
