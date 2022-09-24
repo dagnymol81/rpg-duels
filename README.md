@@ -4,8 +4,6 @@
 
 RPG Duels is a basic duels game where the player can choose a character class and battle against another character of any character class.
 
-![Character Select](images/select-screen.png)
-
 RPG Duels implements six character classes: wizard, fighter, cleric, rogue, bard and ranger. Each class has its own strengths and weaknesses. Characters can use either regular or special attacks, which are also unique to each class.
 
 The player character goes first, selecting a regular or special attack. The enemy automatically counterattacks. Enemy use of specials is randomly determined. All results are logged on screen.
