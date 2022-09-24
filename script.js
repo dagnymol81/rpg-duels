@@ -19,6 +19,7 @@ const gameModeSelect = document.querySelector("#game-mode-select")
 const startBtn = document.querySelector("#start")
 const modalHeading = document.querySelector("#modal-content h1")
 
+
 let roundTwo = false;
 
 let preferences = {
@@ -354,6 +355,7 @@ function makeAttack(player, target, special) {
 
 }
 
+//player attack and counterattack
 function playRound(p1, p2, attackType) {
   attackText.textContent = ""
 

@@ -1,6 +1,6 @@
-RPG DUELS
+# RPG DUELS
 
-GAMEPLAY
+## GAMEPLAY
 
 RPG Duels is a basic duels game where the player can choose a character class and battle against another character of any character class.
 
@@ -10,27 +10,31 @@ The player character goes first, selecting a regular or special attack. The enem
 
 A round ends when one character reaches zero hit points. The player is offered the option to start a new round.
 
-TECHNOLOGY USED
+## TECHNOLOGY USED
 
 RPG Duels is written with HTML, CSS and (vanilla) JavaScript.
 
-WHERE TO PLAY
+## WHERE TO PLAY
 
 You can play RPG Duels on GitHub Pages:
 
 https://dagnymol81.github.io/rpg-duels/
 
-FUTURE PLANS
+## FUTURE PLANS
 
 Features under consideration but not yet implemented:
 
  - Player vs. Player Modes
  - An adventure mode with level progression
 
-CREDITS
+## CREDITS
 
   - Character graphics by Justin Nichol from Open Game Art used under a CC-BY license: 
   https://opengameart.org/users/justin-nichol
 
   - Roboto Slab font by Christian Robertson from Google Fonts:
   https://fonts.google.com/specimen/Roboto+Slab
+  
+  ## LICENSE
+  
+  MIT License
