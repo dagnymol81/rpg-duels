@@ -23,9 +23,9 @@ const modalHeading = document.querySelector("#modal-content h1")
 let roundTwo = false;
 
 let preferences = {
-  p1Class: "wizard",
+  p1Class: "Wizard",
   p1Name: "Trevor",
-  p2Class: "bard",
+  p2Class: "Bard",
   p2Name: "Katie",
   gameMode: "1p-skirmish"
 }
@@ -66,123 +66,128 @@ specialBtn.addEventListener("click", () => {
   setTimeout(playRound(player1, player2, "special"), 1000)
 })
 
-class Wizard {
-  constructor(name) {
-    this.hp = randomInt(18, 20)
-    this.mp = randomInt(3, 4)
-    this.ac = randomInt(10, 11)
-    this.hit = randomInt(4, 5)
-    this.name = name
-    this.attackName = "MYSTIC BLAST"
-    this.specialName = "CATACLYSM"
-  }
-
-  damage() {
-    return randomInt(1, 4)
-  }
-
-  specialDamage() {
-    return randomInt(1, 8) + 7
-  }
-
+const PlayerClasses = {
+  Wizard: {
+    minHP: 18,
+    maxHP: 20,
+    minMP: 3,
+    maxMP: 4,
+    specialBonus: 7,
+    baseDMG: 4,
+    minAcc: 4,
+    maxAcc: 5,
+    minAC: 10,
+    maxAC: 11,
+    attackName: "MYSTIC BLAST",
+    specialName: "CATACLYSM",
+    portrait: 'hero_wizard_transparent.png',
+  },
+  Knight: {
+    minHP: 20,
+    maxHP: 22,
+    minMP: 1,
+    maxMP: 2,
+    specialBonus: 5,
+    baseDMG: 5,
+    minAcc: 1,
+    maxAcc: 2,
+    minAC: 15,
+    maxAC: 16,
+    attackName: "SWORD",
+    specialName: "DEVASTATING BLOW",
+    portrait: 'hero_paladin_transparent.png'
+  },
+  Cleric: {
+    minHP: 21,
+    maxHP: 23,
+    minMP: 2,
+    maxMP: 3,
+    specialBonus: 4,
+    baseDMG: 3,
+    minAcc: 3,
+    maxAcc: 4,
+    minAC: 14,
+    maxAC: 15,
+    attackName: "MACE",
+    specialName: "SMITE",
+    portrait: 'hero_cleric_transparent.png'
+  },
+  Rogue: {
+    minHP: 19,
+    maxHP: 21,
+    minMP: 1,
+    maxMP: 1,
+    specialBonus: 8,
+    baseDMG: 5,
+    minAcc: 5,
+    maxAcc: 6,
+    minAC: 11,
+    maxAC: 12,
+    attackName: "DAGGER",
+    specialName: "SNEAK ATTACK",
+    portrait: 'hero_assassin_transparent.png'
+  },
+  Bard: {
+    minHP: 16,
+    maxHP: 18,
+    minMP: 2,
+    maxMP: 4,
+    specialBonus: 6,
+    baseDMG: 8,
+    minAcc: 2,
+    maxAcc: 3,
+    minAC: 12,
+    maxAC: 13,
+    attackName: "BATTLE CRY",
+    specialName: "DEADLY DIRGE",
+    portrait: 'hero_bard_transparent.png',
+  },
+  Ranger: {
+    minHP: 17,
+    maxHP: 19,
+    minMP: 1,
+    maxMP: 3,
+    specialBonus: 3, 
+    baseDMG: 7,
+    minAcc: 5,
+    maxAcc: 7,
+    minAC: 13,
+    maxAC: 14,
+    attackName: "LONGBOW",
+    specialName: "SAVAGE STRIKE",
+    portrait: 'hero_ranger_transparent.png',
+  },
 }
 
-class Knight {
-  constructor(name) {
-    this.hp = randomInt(20, 22)
-    this.mp = randomInt(1, 2)
-    this.ac = randomInt(15, 16)
-    this.hit = randomInt(1, 2)
-    this.name = name
-    this.attackName = "SWORD"
-    this.specialName = "DEVASTATING BLOW"
-  }
-
-  damage() {
-    return randomInt(1, 6)
-  }
-
-  specialDamage() {
-    return randomInt(1, 8) + 5
-  }
+const Monsters = {
+  
 }
 
-class Cleric {
-  constructor(name) {
-    this.hp = randomInt(21, 23)
-    this.mp = randomInt(2, 3)
-    this.ac = randomInt(14, 15)
-    this.hit = randomInt(3, 4)
+class Character {
+  constructor(name, characterClass) {
+    this.hp = randomInt(PlayerClasses[characterClass].minHP, PlayerClasses[characterClass].maxHP)
+    this.mp = randomInt(PlayerClasses[characterClass].minMP, PlayerClasses[characterClass].maxMP)
+    this.ac = randomInt(PlayerClasses[characterClass].minAC, PlayerClasses[characterClass].maxAC)
     this.name = name
-    this.attackName = "MACE"
-    this.specialName = "SMITE"
+    this.attackName = PlayerClasses[characterClass].attackName
+    this.specialName = PlayerClasses[characterClass].specialName
+    this.baseDMG = PlayerClasses[characterClass].baseDMG
+    this.specialBonus = PlayerClasses[characterClass].specialBonus
+    this.hit = randomInt(PlayerClasses[characterClass].minAcc, PlayerClasses[characterClass].maxAcc)
   }
-
   damage() {
-    return randomInt(1, 3)
+    return randomInt(1, this.baseDMG)
   }
-
   specialDamage() {
-    return randomInt(1, 8) + 4
+    return randomInt(1, 8) + this.specialBonus
   }
-}
-class Rogue {
-  constructor(name) {
-    this.hp = randomInt(19, 21)
-    this.mp = 1
-    this.ac = randomInt(11, 12)
-    this.hit = randomInt(5, 6)
-    this.name = name
-    this.attackName = "DAGGER"
-    this.specialName = "SNEAK ATTACK"
-  }
-
-  damage() {
-    return randomInt(1, 5)
-  }
-
-  specialDamage() {
-    return randomInt(1, 8) + 8
-  }
-}
-
-class Bard {
-  constructor(name) {
-    this.hp = randomInt(16, 18)
-    this.mp = randomInt(2, 4)
-    this.ac = randomInt(12, 13)
-    this.hit = randomInt(2, 3)
-    this.name = name
-    this.attackName = "BATTLE CRY"
-    this.specialName = "DEADLY DIRGE"
-  }
-
-  damage() {
-    return randomInt(1, 8)
-  }
-
-  specialDamage() {
-    return randomInt(1, 8) + 6
-  }
-}
-
-class Ranger {
-  constructor(name) {
-    this.hp = randomInt(17, 19)
-    this.mp = randomInt(1, 3)
-    this.ac = randomInt(13, 14)
-    this.hit = randomInt(6, 7)
-    this.name = name
-    this.attackName = "LONGBOW"
-    this.specialName = "SAVAGE STRIKE"
-  }
-
-  damage() {
-    return randomInt(1, 7)
-  }
-
-  specialDamage() {
-    return randomInt(1, 8) + 3
+  levelUp() {
+    this.hp += randomInt(PlayerClasses[characterClass].minHP, PlayerClasses[characterClass].maxHP)
+    this.mp += randomInt(PlayerClasses[characterClass].minMP, PlayerClasses[characterClass].maxMP)
+    this.ac += randomInt(1, 3)
+    this.baseDMG += PlayerClasses[characterClass].baseDMG
+    this.specialBonus += PlayerClasses[characterClass].specialBonus
+    this.hit += randomInt(3, 5)
   }
 }
 
@@ -218,57 +223,17 @@ function setupGame() {
 
   roundTwo = false;
 
-  switch(preferences.p1Class) {
-    case "wizard":
-      player1 = new Wizard(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_wizard_transparent.png')"
-      break
-    case "fighter":
-      player1 = new Knight(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_paladin_transparent.png')"
-      break
-    case "cleric":
-      player1 = new Cleric(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_cleric_transparent.png')"
-      break
-    case "rogue":
-      player1 = new Rogue(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_assassin_transparent.png')"
-      break
-    case "bard":
-      player1 = new Bard(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_bard_transparent.png')"
-      break
-    case "ranger":
-      player1 = new Ranger(preferences.p1Name)
-      p1Image.style.backgroundImage = "url('images/hero_ranger_transparent.png')"
-  }
+  console.log(preferences.p1Name)
+  console.log(preferences.p1Class)
 
-  switch(preferences.p2Class) {
-    case "wizard":
-      player2 = new Wizard(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_wizard_transparent.png')"
-      break
-    case "fighter":
-      player2 = new Knight(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_paladin_transparent.png')"
-      break
-    case "cleric":
-      player2 = new Cleric(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_cleric_transparent.png')"
-      break
-    case "rogue":
-      player2 = new Rogue(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_assassin_transparent.png')"
-      break
-    case "bard":
-      player2 = new Bard(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_bard_transparent.png')"
-      break
-    case "ranger":
-      player2 = new Ranger(preferences.p2Name)
-      p2Image.style.backgroundImage = "url('images/hero_ranger_transparent.png')"
-  }
+  player1 = new Character(preferences.p1Name, preferences.p1Class)
+  p1Image.style.backgroundImage = `url('images/${PlayerClasses[preferences.p1Class].portrait}')`
+
+  player2 = new Character(preferences.p2Name, preferences.p2Class)
+  p2Image.style.backgroundImage = `url('images/${PlayerClasses[preferences.p2Class].portrait}')`
+
+  console.log(player1)
+  console.log(player2)
 
   attackText.innerHTML = "<h2>VERSUS</h2>"
   while(combatLog.firstChild) {
