@@ -6,9 +6,15 @@ RPG Duels is a basic duels game where the player can choose a character class an
 
 RPG Duels implements six character classes: wizard, fighter, cleric, rogue, bard and ranger. Each class has its own strengths and weaknesses. Characters can use either regular or special attacks, which are also unique to each class.
 
-The player character goes first, selecting a regular or special attack. The enemy automatically counterattacks. Enemy use of specials is randomly determined. All results are logged on screen.
+RPG Duels has three game modes: single player skirmish, pass and play, or adventure mode.
+
+In single player skirmish, the player character goes first, selecting a regular or special attack. The enemy automatically counterattacks. Enemy use of specials is randomly determined. All results are logged on screen.
+
+In pass and play, control rotates between the two characters who are both controlled by the same set of inputs.
 
 A round ends when one character reaches zero hit points. The player is offered the option to start a new round.
+
+In adventure mode, the player character faces a series of monsters in battles similar to single player skirmish. They regain their maximum health after each fight and level up after some fights.
 
 ![Gameplay](images/play-screen.png)
 
@@ -21,13 +27,6 @@ RPG Duels is written with HTML, CSS and (vanilla) JavaScript.
 You can play RPG Duels on GitHub Pages:
 
 https://dagnymol81.github.io/rpg-duels/
-
-## FUTURE PLANS
-
-Features under consideration but not yet implemented:
-
- - Player vs. Player Modes
- - An adventure mode with level progression
 
 ## CREDITS
 
